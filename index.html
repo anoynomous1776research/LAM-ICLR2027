@@ -1,0 +1,855 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="referrer" content="no-referrer">
+<meta name="description" content="Anonymous project page for an ICLR 2027 submission: Harnessing LLMs as Agents: What Does It Cost? The Language Model Agent Machine (LAM), its charged resources, and its conditional results.">
+<title>Language Model Agent Machines</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAr0lEQVR42tWX2w2AMAhFu4WbuI37j6G/pknLfVClJP4Y4R5QKbS2kx3ndSPXL6JLYFxxCyJLXILIFqcgVolDEGywt9kQjngKxFYAM5MA3HdvV8HJfnTvEwD3j6ABZpkqVbAAMvoCBYBkyFZBBsjqjjAAkxnzrASQWS0IQPm6UR+oG6pdLvKDzgLnsIl8aQBl+KAAeggn+ygGNBW54qM49YfSEmN5icWkxGpWYjldbQ8YxO0EaOf+oAAAAABJRU5ErkJggg==">
+<style>
+:root{color-scheme:light dark;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+img{max-width:100%} [hidden]{display:none!important}
+</style>
+<style>
+:root{
+  --navy:#17365D; --blue:#4A90E2;
+  --bg:#F8FAFC; --surface:#FFFFFF; --sunk:#EEF3F8; --line:#D9E2EC; --line-strong:#B8C6D6;
+  --text:#172033; --muted:#556178; --faint:#7C879B;
+  --ink:#17365D; --ink-soft:#E4ECF6;
+  --comm:#17365D; --comm-soft:#E4ECF6;
+  --acc:#2F8E9E;  --acc-soft:#E1F3F6;
+  --rec:#C9772A;  --rec-soft:#FCEEDF;
+  --rel:#7A5FC7;  --rel-soft:#EEE9FB;
+  --good:#2E9D63; --good-soft:#E3F5EB;
+  --bad:#C4513D;  --bad-soft:#FBE8E4;
+  --warn:#B7791F; --warn-soft:#FBF1DC;
+  --red-peb:#E07A6F; --blue-peb:#5B9BE0;
+  --shadow:0 1px 2px rgba(23,32,51,.06),0 6px 24px rgba(23,54,93,.06);
+  --sans:"Inter",-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  --serif:"Source Serif 4","Source Serif Pro",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0D1522; --surface:#141F30; --sunk:#101A29; --line:#24324A; --line-strong:#34455F;
+    --text:#E4EAF3; --muted:#A3B0C4; --faint:#7F8CA2;
+    --ink:#8DB4E6; --ink-soft:#1A2B44;
+    --comm:#8DB4E6; --comm-soft:#1A2B44;
+    --acc:#7CCEDC;  --acc-soft:#15303A;
+    --rec:#F2A65A;  --rec-soft:#352618;
+    --rel:#B49CF0;  --rel-soft:#2A2140;
+    --good:#6FCF97; --good-soft:#15301F;
+    --bad:#EE8A76;  --bad-soft:#3A1E19;
+    --warn:#E9B45C; --warn-soft:#342A14;
+    --red-peb:#E8907F; --blue-peb:#7FB2EA;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 24px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+    --bg:#0D1522; --surface:#141F30; --sunk:#101A29; --line:#24324A; --line-strong:#34455F;
+    --text:#E4EAF3; --muted:#A3B0C4; --faint:#7F8CA2;
+    --ink:#8DB4E6; --ink-soft:#1A2B44;
+    --comm:#8DB4E6; --comm-soft:#1A2B44;
+    --acc:#7CCEDC;  --acc-soft:#15303A;
+    --rec:#F2A65A;  --rec-soft:#352618;
+    --rel:#B49CF0;  --rel-soft:#2A2140;
+    --good:#6FCF97; --good-soft:#15301F;
+    --bad:#EE8A76;  --bad-soft:#3A1E19;
+    --warn:#E9B45C; --warn-soft:#342A14;
+    --red-peb:#E8907F; --blue-peb:#7FB2EA;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 24px rgba(0,0,0,.25);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--serif);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:24px}
+@media (max-width:560px){.wrap{padding-inline:16px}}
+h1,h2,h3,h4{font-family:var(--sans);color:var(--text);text-wrap:balance;margin:0;letter-spacing:-.01em}
+h1{font-size:clamp(2rem,4.4vw,3.1rem);line-height:1.1;font-weight:700;letter-spacing:-.025em}
+h2{font-size:clamp(1.55rem,2.8vw,2.1rem);line-height:1.18;font-weight:700}
+h3{font-size:1.12rem;line-height:1.3;font-weight:600}
+h4{font-size:.95rem;font-weight:600}
+p{margin:0}
+a{color:var(--blue)}
+.lede{font-size:1.1rem;color:var(--muted);max-width:70ch}
+.label{font-family:var(--sans);font-size:.72rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+.mono{font-family:var(--mono);font-size:.85em}
+.m{font-family:var(--serif);font-style:italic}
+.m sub,.m sup{font-style:normal;font-size:.72em;line-height:0}
+.m .up{font-style:normal}
+.eq{font-family:var(--serif);font-size:1.05rem;padding:8px 12px;background:var(--sunk);border-radius:8px;overflow-x:auto;white-space:nowrap;line-height:1.7}
+.eq i{font-style:italic}
+.eq sub,.eq sup{font-size:.72em;line-height:0}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:4px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:28px;height:56px;font-family:var(--sans);font-size:.9rem}
+.brand{font-weight:700;color:var(--text);text-decoration:none;letter-spacing:.02em}
+.nav ul{display:flex;gap:20px;list-style:none;margin:0;padding:0}
+.nav ul a{color:var(--muted);text-decoration:none}
+.nav ul a:hover{color:var(--text)}
+.nav .anon{margin-left:auto;color:var(--faint);font-size:.8rem}
+@media (max-width:760px){.nav .anon{display:none}.nav ul{gap:14px}.nav .wrap{gap:16px}}
+@media (max-width:420px){.nav ul li:nth-child(4),.nav ul li:nth-child(5){display:none}}
+
+section{padding-block:72px;border-bottom:1px solid var(--line)}
+section.tight{padding-block:52px}
+.sec-head{display:grid;gap:12px;margin-bottom:34px;max-width:820px}
+
+/* hero */
+.hero{padding-block:52px 60px;border-bottom:1px solid var(--line)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:48px;align-items:center}
+@media (max-width:920px){.hero-grid{grid-template-columns:1fr;gap:36px}}
+.hero .kicker{font-family:var(--sans);font-weight:600;color:var(--ink);font-size:.95rem;margin-bottom:14px}
+.hero .sub{font-family:var(--sans);font-size:1.05rem;color:var(--muted);margin-top:14px;font-weight:500}
+.hero .thesis{margin-top:18px;font-size:1.06rem;max-width:58ch}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.tag{font-family:var(--sans);font-size:.8rem;font-weight:500;padding:5px 11px;border-radius:999px;border:1px solid var(--line-strong);color:var(--muted);background:var(--surface);display:inline-flex;align-items:center;gap:7px}
+.tag i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.btn{font-family:var(--sans);font-weight:600;font-size:.92rem;padding:10px 18px;border-radius:8px;text-decoration:none;border:1px solid var(--ink);transition:background .15s,color .15s}
+.btn.primary{background:var(--ink);color:var(--bg)}
+.btn.primary:hover{filter:brightness(1.12)}
+.btn.ghost{color:var(--ink);background:transparent}
+.btn.ghost:hover{background:var(--ink-soft)}
+.glance{margin-top:30px;font-family:var(--sans);padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:.92rem;max-width:60ch}
+.glance b{color:var(--text)}
+
+/* machine card */
+.machine{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow);font-family:var(--sans)}
+.machine .tuple{font-family:var(--serif);font-size:1.25rem;text-align:center;padding:8px 0 14px;border-bottom:1px dashed var(--line);margin-bottom:12px}
+.machine .tuple i{font-style:italic}
+.machine .tuple sub{font-size:.7em;font-style:normal}
+.comp{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
+@media (max-width:480px){.comp{grid-template-columns:1fr}}
+.comp div{border-radius:9px;padding:9px 11px;border:1px solid var(--line);background:var(--sunk)}
+.comp b{display:block;font-size:.84rem;font-weight:600}
+.comp b .sym{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--muted);margin-left:6px}
+.comp b .sym sub{font-style:normal;font-size:.7em}
+.comp small{display:block;font-size:.76rem;color:var(--muted);line-height:1.4;margin-top:3px}
+.comp .x{border-color:color-mix(in srgb,var(--red-peb) 55%,var(--line))}
+.comp .mm{border-color:color-mix(in srgb,var(--blue-peb) 55%,var(--line))}
+.counters{margin-top:12px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.counters .label{margin-right:4px}
+.cnt{font-family:var(--serif);font-style:italic;font-size:.95rem;padding:3px 9px;border-radius:6px;background:var(--ink-soft);color:var(--ink);border:1px solid color-mix(in srgb,var(--ink) 25%,transparent)}
+.cnt sub{font-style:normal;font-size:.7em}
+
+/* framework diagram */
+.diagram{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:var(--shadow);font-family:var(--sans);display:grid;gap:12px}
+.d-ctrl{border-radius:10px;padding:12px 16px;background:var(--ink-soft);border:1px solid color-mix(in srgb,var(--ink) 30%,transparent);display:flex;flex-wrap:wrap;gap:6px 18px;align-items:baseline}
+.d-ctrl b{color:var(--ink)}
+.d-ctrl span{font-size:.84rem;color:var(--muted)}
+.d-row{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) auto minmax(0,1fr);gap:10px;align-items:stretch}
+@media (max-width:820px){.d-row{grid-template-columns:1fr}.d-link{flex-direction:row!important;justify-content:center;padding:2px 0!important}.d-link svg{transform:rotate(90deg)}}
+.d-box{border-radius:10px;padding:12px 14px;border:1.5px solid var(--line-strong);background:var(--sunk);display:grid;gap:4px;align-content:start}
+.d-box h4{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.d-box h4 .sym{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--muted)}
+.d-box h4 .sym sub{font-style:normal;font-size:.7em}
+.d-box p{font-size:.82rem;color:var(--muted);line-height:1.45}
+.d-box.x{border-color:var(--red-peb)}
+.d-box.mm{border-color:var(--blue-peb)}
+.d-box.l{border-color:var(--ink);background:var(--surface)}
+.d-link{display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;font-size:.74rem;color:var(--muted);text-align:center;padding:0 4px;min-width:96px}
+.d-link svg{width:60px;height:18px;flex:none}
+.d-link .k{font-family:var(--serif);font-style:italic;font-size:.9rem;color:var(--text)}
+.d-link .k sub{font-style:normal;font-size:.7em}
+.d-sub{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+@media (max-width:640px){.d-sub{grid-template-columns:1fr}}
+.d-sub .d-box{background:var(--surface)}
+.d-note{font-size:.8rem;color:var(--faint);border-top:1px dashed var(--line);padding-top:10px}
+.peb{display:inline-block;width:11px;height:11px;border-radius:50%;vertical-align:-1px;margin-right:4px}
+.peb.r{background:var(--red-peb)} .peb.b{background:var(--blue-peb)}
+
+/* counters table + two cards */
+.fw-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:18px;margin-top:18px}
+@media (max-width:920px){.fw-grid{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px;display:grid;gap:10px;align-content:start;min-width:0}
+.card h3{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.card p{font-size:.95rem;color:var(--muted)}
+.card p.strong{color:var(--text)}
+table{border-collapse:collapse;width:100%;font-family:var(--sans);font-size:.86rem;font-variant-numeric:tabular-nums}
+th{font-weight:600;color:var(--faint);font-size:.74rem;text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap;letter-spacing:.04em;text-transform:uppercase}
+td{padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td.sym{font-family:var(--serif);font-style:italic;font-size:1rem;white-space:nowrap;color:var(--text)}
+td.sym sub{font-style:normal;font-size:.7em}
+td.num{text-align:right;white-space:nowrap}
+th.num{text-align:right}
+.tbl{overflow-x:auto}
+.stack{display:grid;gap:18px}
+
+/* pills */
+.pill{font-family:var(--sans);font-size:.7rem;font-weight:600;padding:2px 8px;border-radius:5px;letter-spacing:.03em;white-space:nowrap;display:inline-block}
+.pill.comm{background:var(--comm-soft);color:var(--comm)}
+.pill.acc{background:var(--acc-soft);color:var(--acc)}
+.pill.rec{background:var(--rec-soft);color:var(--rec)}
+.pill.rel{background:var(--rel-soft);color:var(--rel)}
+.pill.app{background:var(--sunk);color:var(--muted);border:1px solid var(--line)}
+.pill.sim{background:var(--warn-soft);color:var(--warn)}
+.pill.open{background:var(--bad-soft);color:var(--bad)}
+
+/* reading guide + filter */
+.guide{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 20px;font-family:var(--sans);font-size:.92rem}
+@media (max-width:820px){.guide{grid-template-columns:1fr}}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;color:var(--muted)}
+.legend b{color:var(--text);font-weight:600}
+.filters{display:flex;flex-wrap:wrap;gap:6px}
+.filters button{border:1px solid var(--line-strong);background:var(--surface);color:var(--muted);border-radius:999px;padding:6px 12px;font-size:.82rem;font-weight:500;cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--text);color:var(--bg);border-color:var(--text)}
+
+/* result cards */
+.group{margin-top:34px}
+.group-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px 16px;margin-bottom:14px;padding-left:14px;border-left:4px solid var(--g)}
+.group-head h3{font-size:1.3rem}
+.group-head p{font-family:var(--sans);font-size:.92rem;color:var(--muted);max-width:80ch}
+.group.comm{--g:var(--comm);--gs:var(--comm-soft)} .group.acc{--g:var(--acc);--gs:var(--acc-soft)}
+.group.rec{--g:var(--rec);--gs:var(--rec-soft)} .group.rel{--g:var(--rel);--gs:var(--rel-soft)}
+.results{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:14px}
+.res{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--g);border-radius:12px;padding:18px 20px;display:grid;gap:12px;align-content:start;min-width:0}
+.res .rh{display:grid;gap:4px}
+.res .rh .num{font-family:var(--sans);font-size:.74rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--g);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.res .rh h4{font-size:1.05rem;line-height:1.3}
+.res .stmt{font-size:.97rem}
+.res .stmt .eq{margin-top:6px;font-size:1rem}
+.blk{display:grid;grid-template-columns:78px minmax(0,1fr);gap:8px;font-family:var(--sans);font-size:.86rem;padding-top:10px;border-top:1px dashed var(--line)}
+.blk .k{font-size:.7rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--faint);padding-top:3px}
+.blk.class .k{color:var(--g)}
+.blk.not .k{color:var(--bad)}
+.blk ul{margin:0;padding-left:16px;display:grid;gap:3px;color:var(--text)}
+.blk p{color:var(--text)}
+.blk.not p,.blk.not ul{color:var(--muted)}
+@media (max-width:420px){.blk{grid-template-columns:1fr;gap:3px}}
+
+/* regime */
+.regime{display:grid;gap:10px}
+.reg{display:grid;grid-template-columns:150px minmax(0,1fr);gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+@media (max-width:640px){.reg{grid-template-columns:1fr;gap:6px}}
+.reg .w{font-family:var(--sans);display:grid;gap:4px;align-content:start}
+.reg .w b{font-size:.95rem}
+.reg .w span{font-size:.78rem;color:var(--muted)}
+.reg .b{display:grid;gap:8px;font-size:.95rem}
+.reg .b .cls{font-family:var(--sans);font-size:.84rem;color:var(--muted)}
+.reg .b .cls b{color:var(--text);font-weight:600}
+.reg.none{border-left:4px solid var(--faint)}
+.reg.comm{border-left:4px solid var(--comm)} .reg.acc{border-left:4px solid var(--acc)} .reg.rec{border-left:4px solid var(--rec)} .reg.rel{border-left:4px solid var(--rel)}
+.pull{margin-top:22px;font-size:1.1rem;font-style:italic;color:var(--text);border-left:3px solid var(--ink);padding-left:16px;max-width:76ch}
+
+/* rules */
+.rules{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media (max-width:920px){.rules{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.rules{grid-template-columns:1fr}}
+.rule{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:grid;gap:8px;align-content:start;border-top:3px solid var(--g)}
+.rule.comm{--g:var(--comm)} .rule.acc{--g:var(--acc)} .rule.rec{--g:var(--rec)} .rule.rel{--g:var(--rel)}
+.rule h4{font-size:1rem}
+.rule p{font-family:var(--sans);font-size:.86rem;color:var(--muted)}
+.rule p b{color:var(--text)}
+
+/* checks */
+.checks{display:grid;grid-template-columns:minmax(0,1fr);gap:18px}
+.callout{font-family:var(--sans);font-size:.92rem;background:var(--warn-soft);border-left:3px solid var(--warn);padding:12px 16px;border-radius:0 8px 8px 0;max-width:100ch}
+.callout b{color:var(--text)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media (max-width:820px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;font-family:var(--sans)}
+.stat b{display:block;font-size:1.7rem;font-variant-numeric:tabular-nums;color:var(--ink);line-height:1.1}
+.stat b small{font-size:.9rem;color:var(--muted);font-weight:500}
+.stat span{font-size:.8rem;color:var(--muted);display:block;margin-top:4px;line-height:1.4}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+@media (max-width:860px){.two{grid-template-columns:1fr}}
+.note{font-family:var(--sans);font-size:.85rem;color:var(--muted);max-width:100ch}
+
+/* open + artifacts */
+.cards3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width:860px){.cards3{grid-template-columns:1fr}}
+.art{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px 18px;display:grid;gap:8px;align-content:start}
+.art .path{font-family:var(--mono);font-size:.76rem;color:var(--faint);overflow-wrap:anywhere}
+.art p{font-size:.92rem;color:var(--muted)}
+.disclaimer{font-family:var(--sans);font-size:.8rem;color:var(--faint);margin-top:14px;max-width:100ch}
+
+footer{padding-block:40px 56px;font-family:var(--sans);font-size:.88rem;color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 24px}
+footer b{color:var(--text)}
+</style>
+</head>
+<body>
+<nav class="nav" aria-label="Sections">
+  <div class="wrap">
+    <a class="brand" href="#top">LAM</a>
+    <ul>
+      <li><a href="#framework">Framework</a></li>
+      <li><a href="#results">Results</a></li>
+      <li><a href="#regimes">Regime map</a></li>
+      <li><a href="#checks">Checks</a></li>
+      <li><a href="#artifacts">Artifacts</a></li>
+    </ul>
+    <span class="anon">Anonymous ICLR 2027 Submission</span>
+  </div>
+</nav>
+
+<main>
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <p class="kicker">Language Model Agent Machines (LAM)</p>
+      <h1>Harnessing LLMs as Agents: What Does It Cost?</h1>
+      <p class="sub">A resource-bounded model of a bounded-context language model together with its harness.</p>
+      <p class="thesis">Universality is too coarse a description of a deployed agent. It says nothing about how many model calls a computation needs, how much state must cross the boundary between a small context and a large store, or whether a thousand-step trajectory stays correct. The LAM makes active context, persistent memory, the memory-access interface, tools and verification explicit resources and, holding the model fixed, charges the harness for what it spends.</p>
+      <div class="tags" aria-label="Result classes">
+        <span class="tag"><i style="background:var(--comm)"></i>Communication</span>
+        <span class="tag"><i style="background:var(--acc)"></i>Access</span>
+        <span class="tag"><i style="background:var(--rec)"></i>Recomputation</span>
+        <span class="tag"><i style="background:var(--rel)"></i>Reliability</span>
+      </div>
+      <div class="cta">
+        <a class="btn primary" href="#framework">See the machine</a>
+        <a class="btn ghost" href="#results">Read the conditional results</a>
+      </div>
+      <p class="glance"><b>Every result below is conditional.</b> Each card summarises its comparison class, assumptions and limitations; the manuscript contains the formal statements and proofs. The communication accounting is exercised with a real model; <b>the reliability results are checked in simulation only.</b></p>
+    </div>
+
+    <div class="machine" aria-label="The LAM tuple">
+      <div class="tuple">Λ = (<i>L</i>, <i>ctrl</i>, <i>X</i>, <i>M</i>, <i>O</i><sub>tool</sub>, <i>O</i><sub>ver</sub>)</div>
+      <div class="comp">
+        <div><b>Model interface<span class="sym">L</span></b><small>Consumes blocks in <i>X</i> and inserts its output as a new block of <i>X</i>; a call therefore takes at most <i>C</i>−1 argument blocks.</small></div>
+        <div><b>Controller<span class="sym">ctrl</span></b><small>Selects which blocks occupy <i>X</i>, schedules model, tool and verifier calls, coordinates reads and writes to <i>M</i>. It never manufactures content.</small></div>
+        <div class="x"><b>Active context<span class="sym">X</span></b><small>At most <i>C</i> blocks simultaneously available to the next model call.</small></div>
+        <div class="mm"><b>Persistent memory<span class="sym">M</span></b><small>At most <i>S</i> blocks across calls, outside <i>X</i>; a stored block must be retrieved into <i>X</i> before it can be used again.</small></div>
+        <div><b>Tool interface<span class="sym">O<sub>tool</sub></span></b><small>An explicitly charged external operation on selected semantic state that returns a semantic block.</small></div>
+        <div><b>Verifier interface<span class="sym">O<sub>ver</sub></span></b><small>Checks the correctness of a semantic block and returns an accept/reject signal.</small></div>
+      </div>
+      <div class="counters" aria-label="Charged counters">
+        <span class="label">Charged</span>
+        <span class="cnt">N</span><span class="cnt">T<sub>in</sub></span><span class="cnt">T<sub>out</sub></span><span class="cnt">Q<sub>blk</sub></span><span class="cnt">Q<sub>move</sub></span>
+        <span class="label" style="margin-left:6px">Bounded</span>
+        <span class="cnt">C</span><span class="cnt">S</span><span class="cnt">δ</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="framework">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="label">The framework</span>
+      <h2>One machine, six components, five charged counters</h2>
+      <p class="lede">A LAM models harness-level execution rather than the model's internal computation. A <em>semantic block</em> is a fixed-width unit of task-relevant information, <span class="m">B<sub>n</sub> = Σ<sup>b(n)</sup></span>; the accounting separates model calls, model-input and model-output symbols, context–memory block transfers, and sequential head movements. Tool calls, verifier calls and external observations of input blocks are counted separately where applicable.</p>
+    </div>
+
+    <div class="diagram" aria-label="LAM data flow">
+      <div class="d-ctrl"><b>Controller <span class="m">ctrl</span></b><span>determines the sequence of harness operations: which blocks occupy <span class="m">X</span>, which calls happen when, and every read and write to <span class="m">M</span>. Under value provenance it may route, copy, store, retrieve and schedule existing blocks only.</span></div>
+      <div class="d-row">
+        <div class="d-box mm">
+          <h4>Persistent memory <span class="sym">M</span></h4>
+          <p>Capacity <span class="m">S</span> blocks. Random access reads a block at a given address; a sequential interface stores blocks in an ordered stream and reaches them with a movable head; a stack pushes and pops.</p>
+          <p><span class="peb b"></span>blue pebble = a stored copy of the block</p>
+        </div>
+        <div class="d-link" aria-hidden="true">
+          <span class="k">Q<sub>blk</sub></span>
+          <svg viewBox="0 0 60 18"><path d="M4 9h52M10 3L4 9l6 6M50 3l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+          <span>load / store, one block each</span>
+          <span class="k">Q<sub>move</sub></span>
+          <span>unit head moves (sequential only)</span>
+        </div>
+        <div class="d-box x">
+          <h4>Active context <span class="sym">X</span></h4>
+          <p>Capacity <span class="m">C</span> blocks, all simultaneously available to the next model call. Includes the controller's own semantic working storage: there is no uncharged fast memory beside it.</p>
+          <p><span class="peb r"></span>red pebble = a block currently in context</p>
+        </div>
+        <div class="d-link" aria-hidden="true">
+          <span class="k">T<sub>in</sub></span>
+          <svg viewBox="0 0 60 18"><path d="M4 9h52M50 3l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+          <span>≤ <span class="m">C</span>−1 argument blocks</span>
+          <svg viewBox="0 0 60 18"><path d="M56 9H4M10 3L4 9l6 6" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+          <span class="k">T<sub>out</sub></span>
+          <span>one new block, inserted before any eviction</span>
+        </div>
+        <div class="d-box l">
+          <h4>Model interface <span class="sym">L</span></h4>
+          <p>The fixed semantic oracle. Each call is counted in <span class="m">N</span>; its input and output symbols in <span class="m">T<sub>in</sub></span> and <span class="m">T<sub>out</sub></span>. The model is held fixed throughout: every comparison isolates the harness, not model power.</p>
+        </div>
+      </div>
+      <div class="d-sub">
+        <div class="d-box"><h4>Tool interface <span class="sym">O<sub>tool</sub></span></h4><p>An explicitly charged external operation on selected semantic state, returning a semantic block (counted in <span class="m">N<sub>tool</sub></span>). Parsing, retrieval scoring or code execution that creates values must be modelled here and charged; it is not free controller work.</p></div>
+        <div class="d-box"><h4>Verifier interface <span class="sym">O<sub>ver</sub></span></h4><p>Checks a semantic block and returns accept or reject (counted in <span class="m">N<sub>ver</sub></span>, weighted by <span class="m">c<sub>v</sub></span> relative to one model call, so <span class="m">Cost = N<sub>model</sub> + c<sub>v</sub>N<sub>ver</sub></span>).</p></div>
+      </div>
+      <p class="d-note">Red–blue reading (Hong–Kung): a <b>load</b> puts a red pebble on a blue-pebbled vertex, a <b>store</b> puts a blue pebble on a red-pebbled one, a vertex may be <b>computed</b> (given a red pebble) when all predecessors are red, and either pebble may be <b>deleted</b>. Red pebbles ≤ <span class="m">C</span>, blue pebbles ≤ <span class="m">S</span>, and each load or store adds one to <span class="m">Q<sub>blk</sub></span>. The stored copy stays in place on a load, so a block already held in memory is never stored twice.</p>
+    </div>
+
+    <div class="fw-grid">
+      <div class="card">
+        <h3>What an execution is charged for</h3>
+        <div class="tbl"><table>
+          <thead><tr><th>Counter</th><th>Meaning</th></tr></thead>
+          <tbody>
+            <tr><td class="sym">N</td><td>Number of model calls (<span class="m">N<sub>model</sub></span>); tool and verifier calls are counted separately as <span class="m">N<sub>tool</sub></span>, <span class="m">N<sub>ver</sub></span>.</td></tr>
+            <tr><td class="sym">T<sub>in</sub>, T<sub>out</sub></td><td>Total symbols supplied to, and produced by, model calls over the execution; <span class="m">T<sub>model</sub> = T<sub>in</sub> + T<sub>out</sub></span>.</td></tr>
+            <tr><td class="sym">Q<sub>blk</sub></td><td>Semantic blocks transferred between <span class="m">X</span> and <span class="m">M</span>, i.e. <span class="m">Θ(Q<sub>blk</sub> b(n))</span> symbols of context–memory traffic.</td></tr>
+            <tr><td class="sym">Q<sub>move</sub></td><td>Unit head movements of a sequential interface; zero for random access. <span class="m">Q<sub>mem</sub> = Q<sub>blk</sub> + Q<sub>move</sub></span> is the total number of memory-interface operations.</td></tr>
+            <tr><td class="sym">Q<sub>obs</sub></td><td>Observations of input blocks made outside model-call arguments, whether by the controller, a tool or a verifier (used by the query-bandwidth bound).</td></tr>
+            <tr><td class="sym">C, S</td><td>Capacities of the active context and of persistent memory, in blocks.</td></tr>
+            <tr><td class="sym">ε, γ, δ, c<sub>v</sub></td><td>Per-transition error probability; probability gap between the correct successor and the most likely incorrect one; allowed overall failure probability; weighted cost of one verifier call.</td></tr>
+          </tbody>
+        </table></div>
+        <p>Model calls, memory-interface operations and input length are different costs; the results below keep them apart.</p>
+      </div>
+      <div class="stack">
+        <div class="card">
+          <h3>The value-provenance restriction <span class="pill app">load-bearing</span></h3>
+          <p class="strong">Every semantic block must originate from the input, a fixed constant, or the output of a model, tool or verifier call. The controller may route, copy, store, retrieve and schedule existing blocks, but cannot generate new task-relevant content on its own.</p>
+          <p>Why it matters: if the controller could compute an arbitrary polynomial-time function of the blocks it reads, it could emit the matrix-multiplication answer after reading the input once, at <span class="m">N = 0</span> model calls and <span class="m">Q<sub>blk</sub> = Θ(n²)</span> transfers against a pebbling bound of <span class="m">Ω(n³/√C)</span>. The lower-bound direction of the pebbling correspondence, and everything that reduces to it, collapses. Production parsing, ranking, deterministic arithmetic or code execution must therefore be charged as explicit computation or lies outside the lower-bound model.</p>
+        </div>
+        <div class="card">
+          <h3>Universality is cheap here</h3>
+          <p>A one-tape Turing machine running in time <span class="m">t</span> and space <span class="m">s</span> is simulated by a LAM with random-access memory of size <span class="m">O(s)</span>, <span class="m">C = O(1)</span> blocks and one deterministic oracle, at <span class="m">N = O(t)</span> calls, <span class="m">Q<sub>blk</sub> = O(t)</span>, <span class="m">Q<sub>move</sub> = 0</span> and <span class="m">T<sub>in</sub> = O(t·b)</span>. What separates agent designs is the resources universality ignores.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:18px">
+      <h3>Prior inference models as LAM parameter settings</h3>
+      <p>Descriptive only: the rows differ in which resource grows. They are not claimed to have equal computational power.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Model</th><th>Memory</th><th>Context <span class="m up">C</span></th><th>Verifier</th><th>Resource that grows</th></tr></thead>
+        <tbody>
+          <tr><td>Direct inference</td><td>—</td><td><span class="m">O(1)</span></td><td>—</td><td>nothing (<span class="m">N = 1</span>)</td></tr>
+          <tr><td>Chain of thought</td><td>—</td><td><span class="m">Θ(T)</span></td><td>—</td><td>context</td></tr>
+          <tr><td>Managed context</td><td>—</td><td><span class="m">O(1)</span></td><td>—</td><td>calls only</td></tr>
+          <tr><td>Memory-augmented</td><td>RAM</td><td><span class="m">O(1)</span></td><td>—</td><td>calls, memory I/O</td></tr>
+          <tr><td>Tool-augmented</td><td>any</td><td><span class="m">O(1)</span></td><td>—</td><td>oracle queries</td></tr>
+          <tr><td>Verifier-assisted</td><td>any</td><td><span class="m">O(1)</span></td><td>yes</td><td>verifier queries</td></tr>
+          <tr><td><b>LAM (this work)</b></td><td>any</td><td>any</td><td>optional</td><td>all of them, jointly</td></tr>
+        </tbody>
+      </table></div>
+      <p><span class="m">T</span> is the number of reasoning steps; physical token width is <span class="m">w = Cb</span>.</p>
+    </div>
+  </div>
+</section>
+
+<section id="results">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="label">The conditional conclusions</span>
+      <h2>Each result, with the hypotheses it actually needs</h2>
+      <p class="lede">The manuscript scopes every separation to a task family and a strategy class. This page keeps those scopes attached: a result without its <b>class</b> and <b>needs</b> lines is not the result the paper proves. Numbers follow the manuscript's theorem numbering at the time of writing.</p>
+    </div>
+
+    <div class="guide">
+      <div class="legend">
+        <span><b>Result</b> what is proved</span>
+        <span><b>Class</b> the task family and the competing systems or strategies compared</span>
+        <span><b>Needs</b> the assumptions and conventions used in the stated comparison</span>
+        <span><b>Not claimed</b> what a reader must not conclude</span>
+      </div>
+      <div class="filters" role="group" aria-label="Filter results by class">
+        <button data-f="all" aria-pressed="true">All</button>
+        <button data-f="comm" aria-pressed="false">Communication</button>
+        <button data-f="acc" aria-pressed="false">Access</button>
+        <button data-f="rec" aria-pressed="false">Recomputation</button>
+        <button data-f="rel" aria-pressed="false">Reliability</button>
+      </div>
+    </div>
+
+    <!-- COMMUNICATION -->
+    <div class="group comm" data-g="comm">
+      <div class="group-head">
+        <h3>Communication</h3>
+        <p>Replay or persist? How much state must cross the context–memory boundary, and how much of it re-enters each model call.</p>
+      </div>
+      <div class="results">
+
+        <article class="res">
+          <div class="rh"><span class="num">Theorem 1</span><h4>Red–blue pebbling correspondence</h4></div>
+          <div class="stmt">(i) Any execution with capacities <span class="m">(C, S)</span> induces a valid red–blue pebbling with at most <span class="m">C</span> red and <span class="m">S</span> blue pebbles and at most <span class="m">Q<sub>blk</sub></span> load and store moves. (ii) Any such pebbling induces a LAM execution with capacities <span class="m">(C, S)</span> and at most the same transfer count. For fixed capacities and matching initial and terminal conventions,
+            <div class="eq">min <i>Q</i><sub>blk</sub>(<i>G</i>; <i>C</i>, <i>S</i>) = IO<sub><i>C</i>,<i>S</i></sub>(<i>G</i>)</div>
+            where <span class="m">IO<sub>C,S</sub></span> is the minimum transfer count with at most <span class="m">C</span> red and <span class="m">S</span> blue pebbles. Classical I/O lower bounds therefore transfer to these executions.</div>
+          <div class="blk class"><span class="k">Class</span><p>A fixed <span class="m">L</span>-realisable computation DAG <span class="m">G</span>, compared with the red–blue pebble game at the same capacities. No distributional assumption over tasks.</p></div>
+          <div class="blk"><span class="k">Needs</span><ul>
+            <li>Source blocks held in <span class="m">M</span>; <span class="m">G</span> evaluated vertex by vertex.</li>
+            <li>No auxiliary value-producing tool or verifier calls (otherwise include them as vertices of an augmented DAG <span class="m">G<sup>+</sup></span> and argue there).</li>
+            <li>Value provenance; all semantic working storage, including controller block registers, counted inside <span class="m">C</span>.</li>
+            <li>Maximum in-degree <span class="m">d</span> needs <span class="m">C ≥ d + 1</span> so arguments and result co-reside; recomputation allowed.</li>
+          </ul></div>
+          <div class="blk not"><span class="k">Not claimed</span><p>Direction (ii) compiles one fixed graph and schedule into a controller; it is not a uniform algorithm for a task family. Without value provenance the lower-bound direction collapses.</p></div>
+        </article>
+
+        <article class="res">
+          <div class="rh"><span class="num">Corollary 2</span><h4>Communication bounds for two DAGs</h4></div>
+          <div class="stmt">
+            <div class="eq">grid: min <i>Q</i><sub>blk</sub> = Θ(<i>n</i>²/<i>C</i>) &nbsp;for 3 ≤ <i>C</i> ≤ <i>c</i>·<i>n</i> and sufficient persistent memory</div>
+            <div class="eq">bilinear matrix multiplication: <i>Q</i><sub>blk</sub> = Ω(<i>n</i>³/√<i>C</i>)</div>
+            Even for a fixed computation DAG, limited active context forces a LAM to transfer provably many semantic blocks. Both statements are under the pebbling-correspondence hypotheses; the grid's matching upper bound is a uniform tiled schedule driven by public structural counters (appendix), not an appeal to direction (ii) above.</div>
+          <div class="blk class"><span class="k">Class</span><p>The <span class="m">n × n</span> grid computation DAG and the bilinear <span class="m">n × n</span> matrix-multiplication DAG, under the hypotheses of Theorem 1.</p></div>
+          <div class="blk"><span class="k">Needs</span><ul>
+            <li>Grid lower bound: <span class="m">3 ≤ C ≤ c·n</span> for a small absolute constant <span class="m">c</span>; sufficient persistent memory (<span class="m">S ≥ |V|</span> suffices).</li>
+            <li>The grid <span class="m">Θ(n²/C)</span> conclusion is stated here only in the range of the corollary.</li>
+            <li>Both DAGs have in-degree at most two, so the insertion convention requires only <span class="m">C ≥ 3</span>.</li>
+          </ul></div>
+          <div class="blk not"><span class="k">Not claimed</span><p>These are block-transfer bounds, not model-call bounds. No transfer claim is made for adaptive comparison sorting, whose external-memory bound uses a different model.</p></div>
+        </article>
+
+        <article class="res">
+          <div class="rh"><span class="num">Proposition 3</span><h4>Sequential input traffic: replay versus dependencies</h4></div>
+          <div class="stmt">On an <span class="m">n</span>-step sequential computation whose steps each produce a <span class="m">Θ(b)</span> block, giving call <span class="m">i</span> every earlier block costs <span class="m">Θ(ib)</span> input, hence
+            <div class="eq"><i>T</i><sub>in</sub> = Θ(<i>n</i>²<i>b</i>) &nbsp;(replay)&nbsp;&nbsp;&nbsp; <i>T</i><sub>in</sub> = Θ(<i>nb</i>) &nbsp;(dependencies only)</div>
+            Dependency-only prompting has linear input traffic under the stated bounded-dependency assumption. Relative to this protocol, full-history replay uses a factor <span class="m">Θ(n)</span> more input symbols.</div>
+          <div class="blk class"><span class="k">Class</span><p>Two named protocols on a chain: full-history replay versus supplying only the blocks a step reads.</p></div>
+          <div class="blk"><span class="k">Needs</span><ul>
+            <li>Replay must hold the whole transcript, so it requires <span class="m">C ≥ n</span>.</li>
+            <li>The linear bound requires each step to depend on only <span class="m">O(1)</span> earlier blocks, and only those to be supplied.</li>
+            <li>This proposition compares the two named prompting protocols; it does not establish optimality over arbitrary harnesses or batched oracle calls. (The appendix adds a floor of <span class="m">N ≥ n</span> calls and <span class="m">T<sub>in</sub> ≥ nb</span> for non-degenerate steps, valid within the one-output-block-per-call convention and value provenance.)</li>
+          </ul></div>
+          <div class="blk not"><span class="k">Not claimed</span><p>This compares particular protocols; it does not assert that every execution without external memory has quadratic input traffic. Where the whole task fits in one call, one-call execution is cheaper still: avoiding replay is not a universal advantage.</p></div>
+        </article>
+      </div>
+    </div>
+
+    <!-- ACCESS -->
+    <div class="group acc" data-g="acc">
+      <div class="group-head">
+        <h3>Access</h3>
+        <p>Which interface? With the oracle fixed, how an agent reaches external state changes its asymptotic cost, and no interface evades what the task itself demands.</p>
+      </div>
+      <div class="results">
+
+        <article class="res">
+          <div class="rh"><span class="num">Theorem 4</span><h4>Random versus sequential access on pointer chasing</h4></div>
+          <div class="stmt">A random-access LAM follows <span class="m">k</span> pointers with <span class="m">k</span> model calls, <span class="m">Q<sub>blk</sub> = Θ(k)</span>, <span class="m">Q<sub>move</sub> = 0</span> and <span class="m">C = O(1)</span>. Every deterministic, always-correct, non-speculative sequential LAM satisfies
+            <div class="eq">𝔼<sub>π</sub>[<i>Q</i><sub>move</sub>] = Ω(<i>kn</i>), &nbsp;hence&nbsp; 𝔼<sub>π</sub>[<i>Q</i><sub>mem</sub>] = Ω(<i>kn</i>)</div>
+            Both systems make the same <span class="m">k</span> semantic transitions and retrieve the same <span class="m">k</span> entries; the sequential interface can incur an additional <span class="m">Θ(n)</span> access cost per step. The lower bound is in expectation over a uniformly random permutation: it is not an <span class="m">Ω(n)</span> charge on every hop or every input. A straightforward demand-driven sequential implementation has matching <span class="m">O(kn)</span> total head movement.</div>
+          <div class="blk class"><span class="k">Class</span><p>Pointer chasing over a table of <span class="m">n</span> entries holding a permutation <span class="m">π</span> of <span class="m">[n]</span>; random access versus the non-speculative sequential class, same oracle. Expectation over <span class="m">π</span> uniformly random.</p></div>
+          <div class="blk"><span class="k">Needs</span><ul>
+            <li><span class="m">2 ≤ k ≤ n/4</span>; one semantic block holds an index in <span class="m">[n]</span>.</li>
+            <li>The sequential execution is deterministic, always correct, and <b>non-speculative</b>: it may read an entry only after its address has been revealed by the preceding step. Preprocessing and prefetching of unrevealed entries are excluded.</li>
+          </ul></div>
+          <div class="blk not"><span class="k">Not claimed</span><p>The speculative case is <b>open</b>: a one-time <span class="m">Ω(n)</span> scan does not imply <span class="m">Ω(kn)</span>, and the paper declines to infer it. The bound is on head movement, not on symbols physically transferred (it is not an <span class="m">Ω(knb)</span> traffic bound).</p></div>
+        </article>
+
+        <article class="res">
+          <div class="rh"><span class="num">Theorem 5</span><h4>Query bandwidth</h4></div>
+          <div class="stmt">Every deterministic LAM computing <span class="m">f</span> has, on some input,
+            <div class="eq"><i>N</i>(<i>C</i>−1) + <i>Q</i><sub>obs</sub> ≥ <i>D</i>(<i>f</i>)</div>
+            and every randomized LAM with error at most 1/3 on each input has <span class="m">max<sub>x</sub> 𝔼<sub>x</sub>[N(C−1) + Q<sub>obs</sub>] ≥ R<sub>1/3</sub>(f)</span>. For the selector <span class="m">f(s, d<sub>1</sub>, …, d<sub>m</sub>) = d<sub>s</sub></span>, <span class="m">D(f) = 2</span>; for parity of <span class="m">m</span> blocks, <span class="m">D(f) = m</span>.</div>
+          <div class="blk class"><span class="k">Class</span><p>Any LAM computing a task <span class="m">f : B<sub>n</sub><sup>m</sup> → B<sub>n</sub></span>, under any memory interface. <span class="m">D(f)</span> is deterministic worst-case block-query complexity; <span class="m">R<sub>1/3</sub>(f)</span> the randomized worst-input expected count.</p></div>
+          <div class="blk"><span class="k">Needs</span><ul>
+            <li>Value provenance and <span class="m">C ≥ 2</span>.</li>
+            <li><span class="m">Q<sub>obs</sub></span> counts every observation of an input block outside model-call arguments, by the controller, a tool or a verifier; each call exposes at most <span class="m">C − 1</span> argument blocks.</li>
+          </ul></div>
+          <div class="blk not"><span class="k">Not claimed</span><p>It bounds the information the task forces the agent to observe, not the cost of reaching a block (that is Theorem 4). Global relevance is the wrong quantity for adaptive access: all <span class="m">m + 1</span> selector inputs are relevant, yet two observations suffice.</p></div>
+        </article>
+
+        <article class="res">
+          <div class="rh"><span class="num">Theorem 18 <span class="pill app">appendix</span></span><h4>A single stack needs linear context for FIFO</h4></div>
+          <div class="stmt">Random access solves <span class="m">FIFO<sub>n</sub></span> with <span class="m">C = 1</span> and <span class="m">Q = 2n</span>. With one stack, the requirement depends on how the write phase is organised:
+            <div class="eq">buffered: <i>n</i> ≤ 3<i>C</i>′ &nbsp;(so <i>C</i>′ ≥ <i>n</i>/3; <i>C</i> = ⌈(<i>n</i>+1)/2⌉ suffices)</div>
+            <div class="eq">streaming: (<i>C</i>−1)·log₂|<i>B</i>| + <i>h</i> ≥ (<i>n</i>−1)·log₂|<i>B</i>| &nbsp;(so <i>h</i> = <i>O</i>(1) forces <i>C</i> ≥ <i>n</i> − <i>O</i>(1))</div></div>
+          <div class="blk class"><span class="k">Class</span><p><span class="m">FIFO<sub>n</sub></span>: a write phase receives arbitrary blocks <span class="m">x<sub>1</sub>, …, x<sub>n</sub></span> in order, a read phase must return them unchanged in that order. One stack plus <span class="m">C</span> context blocks; <span class="m">h</span> bounds the bits of content-dependent state outside both; <span class="m">C′ = C + ⌊h / log₂|B|⌋</span>.</p></div>
+          <div class="blk"><span class="k">Needs</span><ul>
+            <li>Correctness on every input; blocks opaque under value provenance.</li>
+            <li><b>Buffered</b> write phase: arrivals may be held in context before pushing. <b>Streaming</b> write phase: each block is pushed as it arrives.</li>
+            <li>Public structural counters are input-independent and cannot encode the suffix.</li>
+          </ul></div>
+          <div class="blk not"><span class="k">Not claimed</span><p>One stack, not two. In the buffered case only the linear order is claimed; the tight constant lies between 1/3 and 1/2. The hidden-state budget <span class="m">h</span> is part of the restriction: at sublinear context, evading the stated bound requires a linear-order amount of additional content-dependent storage, which must not be treated as free controller state.</p></div>
+        </article>
+      </div>
+    </div>
+
+    <!-- RECOMPUTATION -->
+    <div class="group rec" data-g="rec">
+      <div class="group-head">
+        <h3>Recomputation</h3>
+        <p>Persist or regenerate? Persistence saves model calls, not only traffic, when intermediate results are reused after they have left context.</p>
+      </div>
+      <div class="results">
+        <article class="res">
+          <div class="rh"><span class="num">Theorem 6</span><h4>Persistence versus recomputation on bit-reversal DAGs</h4></div>
+          <div class="stmt">
+            <div class="eq"><i>N</i><sub>RAM</sub> = Θ(<i>n</i>), <i>Q</i><sub>blk</sub> = <i>O</i>(<i>n</i>) &nbsp;&nbsp;versus&nbsp;&nbsp; <i>N</i><sub>no memory</sub> = Θ(<i>n</i>²/<i>C</i> + <i>n</i>)</div>
+            With persistent memory each intermediate block is computed once, stored, and retrieved. Without it, limited context cannot retain blocks until their future uses, so discarded blocks are regenerated. The model-call overhead is a factor <span class="m">Θ(n/C)</span> when <span class="m">C = o(n)</span>.</div>
+          <div class="blk class"><span class="k">Class</span><p>The bit-reversal DAG <span class="m">Δ<sub>n</sub><sup>rev</sup></span>: two length-<span class="m">n</span> chains <span class="m">u</span>, <span class="m">w</span> with edges <span class="m">u<sub>i</sub> → w<sub>rev(i)</sub></span>. A LAM with random-access persistent memory versus one with no persistent memory (<span class="m">S = 0</span>), same oracle.</p></div>
+          <div class="blk"><span class="k">Needs</span><ul>
+            <li><span class="m">n</span> a power of two; the DAG <span class="m">L</span>-realisable.</li>
+            <li>Evaluated vertex by vertex with no auxiliary value-producing calls; the unique source block kept resident in active context.</li>
+            <li><span class="m">4 ≤ C ≤ n</span>; the ratio <span class="m">Θ(n/C)</span> is stated for <span class="m">C = o(n)</span>, i.e. <span class="m">C/n → 0</span>.</li>
+          </ul></div>
+          <div class="blk not"><span class="k">Not claimed</span><p>A polynomial call–space trade-off, not an exponential one. It instantiates the Lengauer–Tarjan bit-reversal bound for this reuse pattern; it is not a statement about arbitrary DAGs.</p></div>
+        </article>
+      </div>
+    </div>
+
+    <!-- RELIABILITY -->
+    <div class="group rel" data-g="rel">
+      <div class="group-head">
+        <h3>Reliability <span class="pill sim">checked in simulation only</span></h3>
+        <p>Sample, verify or checkpoint? A chain of <span class="m">n</span> dependent transitions; given a correct state, a call returns the intended successor with probability <span class="m">1 − ε</span>, and an undetected error propagates. Errors are absorbing throughout. The frontier-model runs produced no oracle error in calibration, so none of these results is tested with that model; a small exploratory diagnostic probes the assumptions only.</p>
+      </div>
+      <div class="results">
+
+        <article class="res">
+          <div class="rh"><span class="num">Proposition 20 <span class="pill app">appendix</span></span><h4>Unamplified success and an idealised restart</h4></div>
+          <div class="stmt">
+            <div class="eq">Pr[single pass correct] = (1−<i>ε</i>)<sup><i>n</i></sup>, &nbsp; 𝔼[<i>N</i>] = <i>n</i>(1−<i>ε</i>)<sup>−<i>n</i></sup> under restart-until-success</div>
+            A long trajectory without correction is almost surely wrong somewhere.</div>
+          <div class="blk class"><span class="k">Class</span><p>Independent per-step success <span class="m">1 − ε</span>; the restart figure is an idealised comparison point, not a policy.</p></div>
+          <div class="blk"><span class="k">Needs</span><ul><li>The restart count assumes a perfect, cost-free end-of-run correctness detector.</li></ul></div>
+          <div class="blk not"><span class="k">Not claimed</span><p>Without such feedback the restart policy cannot be implemented; the executable no-feedback baseline is Theorem 8.</p></div>
+        </article>
+
+        <article class="res">
+          <div class="rh"><span class="num">Theorem 7</span><h4>Sampling amplification (upper bound)</h4></div>
+          <div class="stmt">A plurality vote over <span class="m">m = O(γ<sup>−2</sup> log(An/δ))</span> independent samples per transition gives overall failure at most <span class="m">δ</span> using
+            <div class="eq"><i>N</i> = <i>O</i>(<i>n</i>γ<sup>−2</sup> log(<i>An</i>/<i>δ</i>)) model calls</div></div>
+          <div class="blk class"><span class="k">Class</span><p>Stage-local plurality voting on a chain of <span class="m">n</span> transitions.</p></div>
+          <div class="blk"><span class="k">Needs</span><ul>
+            <li>Repeated calls at the same correct state are independent.</li>
+            <li>At most <span class="m">A</span> incorrect alternatives have nonzero probability, each with probability at most <span class="m">p<sub>c</sub> − γ</span>, where <span class="m">p<sub>c</sub></span> is the correct block's probability and <span class="m">γ &gt; 0</span>.</li>
+          </ul></div>
+          <div class="blk not"><span class="k">Not claimed</span><p>An upper bound only, with a constant that depends on <span class="m">A</span>; the logarithmic factor is shown necessary only on the family of Theorem 8.</p></div>
+        </article>
+
+        <article class="res">
+          <div class="rh"><span class="num">Theorem 8</span><h4>Stage-local sampling lower bound</h4></div>
+          <div class="stmt">There is a depth-<span class="m">n</span> binary-tree family of <span class="m">γ</span>-separated transition distributions on which every stage-local sampling-only strategy achieving failure at most <span class="m">δ</span> satisfies
+            <div class="eq">𝔼[<i>N</i>] ≥ (<i>n</i>/4<i>γ</i>²)·log(<i>n</i>/8<i>δ</i>) = Ω(<i>n</i>γ<sup>−2</sup> log(<i>n</i>/<i>δ</i>))</div>
+            Together with Theorem 7 this is the optimal order, <span class="m">Θ(nγ<sup>−2</sup> log(n/δ))</span>, for that family and class.</div>
+          <div class="blk class"><span class="k">Class</span><p><b>Stage-local sampling-only</b> strategies: any adaptive number of samples per step, arbitrary aggregation within a stage, but no correctness signal and no revision of a committed transition after moving on. Proved on one specific hard family.</p></div>
+          <div class="blk"><span class="k">Needs</span><ul>
+            <li><span class="m">γ ≤ 1/2</span> and <span class="m">δ ≤ 1/4</span>.</li>
+            <li>Off-path states have the same local sampling law as correct-path states, so an error does not reveal itself through later outputs (no lookahead signal).</li>
+            <li>Stopping almost surely finite with finite expected sample counts.</li>
+          </ul></div>
+          <div class="blk not"><span class="k">Not claimed</span><p>The bound is against the no-feedback class, not arbitrary interactive reliability mechanisms: a strategy that receives feedback (Theorem 9) escapes it.</p></div>
+        </article>
+
+        <article class="res">
+          <div class="rh"><span class="num">Theorem 9</span><h4>Perfect local verification</h4></div>
+          <div class="stmt">Resampling a transition until a perfect verifier accepts achieves zero failure with
+            <div class="eq">𝔼[<i>N</i><sub>model</sub>] = 𝔼[<i>N</i><sub>ver</sub>] = <i>n</i>/(1−<i>ε</i>), &nbsp; 𝔼[Cost] = <i>n</i>(1+<i>c<sub>v</sub></i>)/(1−<i>ε</i>)</div>
+            which is <span class="m">Θ(n)</span> for fixed <span class="m">ε &lt; 1</span> and <span class="m">c<sub>v</sub></span>. On the hard family of Theorem 8 this removes the <span class="m">Θ(log(n/δ))</span> overhead of stage-local sampling for constant <span class="m">γ</span> and <span class="m">c<sub>v</sub></span>.</div>
+          <div class="blk class"><span class="k">Class</span><p>Verify-every-transition with a perfect local verifier, weighted cost <span class="m">Cost = N<sub>model</sub> + c<sub>v</sub>N<sub>ver</sub></span>.</p></div>
+          <div class="blk"><span class="k">Needs</span><ul>
+            <li>A perfect local verifier (no false accepts or rejects).</li>
+            <li>Independent attempts, each succeeding with probability <span class="m">1 − ε &gt; 0</span>.</li>
+          </ul></div>
+          <div class="blk not"><span class="k">Not claimed</span><p>The gain comes from feedback, not from more sampling. The weighted-cost ratio against sampling is <span class="m">Θ(γ<sup>−2</sup> log(n/δ)/(1 + c<sub>v</sub>))</span> and exceeds one only while <span class="m">c<sub>v</sub> = O(γ<sup>−2</sup> log(n/δ))</span>; this necessary order condition is not a sufficient cost comparison at the crossover. A perfect verifier is a strong assumption, relaxed next.</p></div>
+        </article>
+
+        <article class="res">
+          <div class="rh"><span class="num">Theorem 10</span><h4>Imperfect local verification, characterised exactly</h4></div>
+          <div class="stmt">With <span class="m">a<sub>t</sub> = (1−ε)(1−p<sub>r</sub>)<sup>t</sup></span>, <span class="m">b<sub>t</sub> = ε p<sub>a</sub><sup>t</sup></span>, <span class="m">s<sub>t</sub> = a<sub>t</sub> + b<sub>t</sub></span>: an accepted candidate is wrong with probability <span class="m">q<sub>t</sub> = b<sub>t</sub>/s<sub>t</sub></span>, attempts per accepted transition are <span class="m">1/s<sub>t</sub></span>, and
+            <div class="eq">𝔼[<i>N</i><sub>model</sub>] = <i>n</i>/<i>s<sub>t</sub></i>, &nbsp; 𝔼[<i>N</i><sub>ver</sub>] = <i>nt</i>/<i>s<sub>t</sub></i>, &nbsp; 𝔼[Cost] = <i>n</i>(1+<i>tc<sub>v</sub></i>)/<i>s<sub>t</sub></i>, &nbsp; Pr[chain failure] ≤ <i>nq<sub>t</sub></i></div>
+            The accepted-error odds decrease with <span class="m">t</span> only when <span class="m">p<sub>a</sub> &lt; 1 − p<sub>r</sub></span>.</div>
+          <div class="blk class"><span class="k">Class</span><p>A verifier with false-accept probability <span class="m">p<sub>a</sub></span> and false-reject probability <span class="m">p<sub>r</sub></span>, applied <span class="m">t</span> times per candidate; a candidate is accepted only if all <span class="m">t</span> checks accept.</p></div>
+          <div class="blk"><span class="k">Needs</span><ul>
+            <li><span class="m">p<sub>r</sub> &lt; 1</span>; candidate attempts and conditional verifier decisions independent.</li>
+            <li>Every attempt pays for all <span class="m">t</span> checks; the acceptance rate is the same at every visited state, including after an earlier accepted error.</li>
+          </ul></div>
+          <div class="blk not"><span class="k">Not claimed</span><p>More checking is not free: false rejects suppress the correct-acceptance term <span class="m">(1−ε)(1−p<sub>r</sub>)<sup>t</sup></span>, and increasing <span class="m">t</span> can lower the overall acceptance probability <span class="m">s<sub>t</sub></span> and substantially increase model calls. Correlated errors are outside this statement.</p></div>
+        </article>
+
+        <article class="res">
+          <div class="rh"><span class="num">Theorem 11</span><h4>Checkpoint law with rollback</h4></div>
+          <div class="stmt">Verifying every <span class="m">k</span> transitions and re-executing the whole rejected segment has expected weighted cost
+            <div class="eq"><i>T</i>(<i>k</i>) = (<i>n</i>/<i>k</i>)(<i>k</i> + <i>c<sub>v</sub></i>)(1−<i>ε</i>)<sup>−<i>k</i></sup></div>
+            With <span class="m">β = −log(1−ε)</span>, the positive-real minimiser is
+            <div class="eq"><i>k</i><sup>⋆</sup> = ½(√(<i>c<sub>v</sub></i>² + 4<i>c<sub>v</sub></i>/<i>β</i>) − <i>c<sub>v</sub></i>)</div>
+            so <span class="m">k<sup>⋆</sup> = √(c<sub>v</sub>/β)(1 + O(√(c<sub>v</sub>β)))</span> as <span class="m">c<sub>v</sub>β → 0</span>, and <span class="m">k<sup>⋆</sup> ~ √(c<sub>v</sub>/ε)</span> if additionally <span class="m">ε → 0</span>.</div>
+          <div class="blk class"><span class="k">Class</span><p>The regular checkpoint-and-rollback policy with a perfect segment verifier; a Young–Daly-type law (the classical optimum differs by <span class="m">√2</span> because a rejected segment is re-executed in full).</p></div>
+          <div class="blk"><span class="k">Needs</span><ul>
+            <li>Independent transition errors with probability <span class="m">ε</span>, <span class="m">0 &lt; ε &lt; 1</span>; perfect segment verifier of cost <span class="m">c<sub>v</sub> &gt; 0</span>.</li>
+            <li>The displayed formula assumes <span class="m">k | n</span>. Otherwise write <span class="m">n = qk + r</span>, <span class="m">0 ≤ r &lt; k</span>; the exact cost is <span class="m">q(k + c<sub>v</sub>)(1−ε)<sup>−k</sup> + 𝟙{r &gt; 0}·(r + c<sub>v</sub>)(1−ε)<sup>−r</sup></span>.</li>
+            <li>For finite horizons, minimise the exact expression over admissible integer <span class="m">k ∈ [1, n]</span>.</li>
+          </ul></div>
+          <div class="blk not"><span class="k">Not claimed</span><p>The leading-order <span class="m">√(c<sub>v</sub>/ε)</span> is accurate only when both <span class="m">ε ≪ 1</span> and <span class="m">c<sub>v</sub>ε ≪ 1</span>; in simulation it is off by a factor of two at <span class="m">ε = 0.1</span>, <span class="m">c<sub>v</sub> = 16</span>. Use the closed form.</p></div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="regimes">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="label">Reading the four results together</span>
+      <h2>A regime map, with explicit quantifiers</h2>
+      <p class="lede">Appendix theorems combine the results into witness regimes where a harness mechanism pays for itself and a counter-regime where it does not. All comparisons use the same fixed semantic oracle and each keeps its own restrictions.</p>
+    </div>
+    <div class="regime">
+      <div class="reg none">
+        <div class="w"><b>(i) Fits in context</b><span>no asymptotic model-call gain from memory</span></div>
+        <div class="b"><p>Let <span class="m">m</span> be the number of internal value-producing vertices of a fixed <span class="m">L</span>-realisable DAG. Under vertex-by-vertex evaluation by model calls, with no auxiliary value-producing calls, a memoryless evaluator and a memory-equipped one both use <span class="m">Θ(m)</span> model calls if a deterministic non-degenerate no-eviction schedule of live width at most <span class="m">C</span> fits in context: each such vertex requires one oracle output under value provenance.</p><p class="cls"><b>Class:</b> the same fixed DAG and oracle, with all semantic working storage and argument/result co-residence counted in <span class="m">C</span>. This is a model-call comparison, not equality of all resource costs.</p></div>
+      </div>
+      <div class="reg acc">
+        <div class="w"><b>(ii) Interface</b><span><span class="m">Θ(n)</span> gap or infeasibility</span></div>
+        <div class="b"><p>On pointer chasing, random access versus an always-correct non-speculative sequential interface has a worst-case memory-operation gap of <span class="m">Θ(n)</span>. On <span class="m">FIFO<sub>n</sub></span>, random access works at constant context whereas one stack with <span class="m">h = 0</span> needs <span class="m">C ≥ n/3</span>.</p><p class="cls"><b>Class:</b> Theorems 4 and 18, with their hypotheses.</p></div>
+      </div>
+      <div class="reg rec">
+        <div class="w"><b>(iii) Persistence</b><span><span class="m">Θ(n/C)</span> call gap</span></div>
+        <div class="b"><p>On <span class="m">Δ<sub>n</sub><sup>rev</sup></span> under vertex-wise evaluation, random-access memory versus <span class="m">S = 0</span> has a model-call gap of <span class="m">Θ(n/C)</span>.</p><p class="cls"><b>Class:</b> Theorem 6, for <span class="m">C = o(n)</span>.</p></div>
+      </div>
+      <div class="reg rel">
+        <div class="w"><b>(iv) Feedback</b><span>logarithmic gap</span></div>
+        <div class="b"><p>On the hard family of Theorem 8, the weighted cost of stage-local sampling divided by that of verifying every transition is <span class="m">Θ(γ<sup>−2</sup> log(n/δ)/(1 + c<sub>v</sub>))</span>, hence <span class="m">Θ(log(n/δ))</span> for constant <span class="m">γ</span>, <span class="m">c<sub>v</sub></span>.</p><p class="cls"><b>Class:</b> a ratio between two named policies, not an advantage over all strategies. It exceeds one only while <span class="m">c<sub>v</sub> = O(γ<sup>−2</sup> log(n/δ))</span>, a necessary order condition that is not a sufficient cost comparison at the crossover, and a class that may ignore its verifier never does worse than sampling alone.</p></div>
+      </div>
+      <div class="reg comm">
+        <div class="w"><b>Joint accounting</b><span>Theorem 23, checkpoint decomposition</span></div>
+        <div class="b"><p>Assume independent transition errors with probability <span class="m">0 &lt; ε &lt; 1</span>, independent fresh retry attempts, and a perfect segment verifier of cost <span class="m">c<sub>v</sub> &gt; 0</span> that detects errors only at segment boundaries. Write <span class="m">β = −log(1−ε)</span>, <span class="m">B = Σ<sub>i</sub> b<sub>i</sub></span> and <span class="m">κ ≥ 1</span>. For a fixed no-recomputation schedule partitioned into segments with <span class="m">ℓ<sub>i</sub></span> calls and base cost <span class="m">b<sub>i</sub></span>, detecting errors only with a perfect verifier of cost <span class="m">c<sub>v</sub></span> at segment boundaries and rolling back the whole segment gives exactly <span class="m">𝔼[Cost] = Σ<sub>i</sub>(b<sub>i</sub> + c<sub>v</sub>)(1−ε)<sup>−ℓ<sub>i</sub></sup></span>, provided a rejected segment restarts from its entry frontier at no charge beyond <span class="m">b<sub>i</sub></span>. Every regular partition with <span class="m">ℓ<sub>i</sub> ≤ b<sub>i</sub> ≤ κℓ<sub>i</sub></span> costs at least <span class="m">B(1 + 2√(c<sub>v</sub>β/κ))</span>; if <span class="m">c<sub>v</sub>β = O(1)</span> and independently verifiable segments of length <span class="m">Θ(√(c<sub>v</sub>/β))</span> exist, the best regular partition costs <span class="m">Θ(B(1 + √(c<sub>v</sub>β)))</span>.</p><p class="cls"><b>Class:</b> an optimum only within the checkpoint-and-rollback class, with a rejected segment restartable from its entry frontier at no charge beyond <span class="m">b<sub>i</sub></span>. The unrestricted harness optimum is lower-bounded only by its noiseless optimum and may sample, encode redundantly or use another verifier.</p></div>
+      </div>
+    </div>
+    <p class="pull">These are sufficient witness and counter-regimes, not necessary-and-sufficient conditions for arbitrary tasks. Working-set size alone is not decisive; the comparison class and the task's query structure are part of any recommendation.</p>
+  </div>
+</section>
+
+<section id="rules" class="tight">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="label">Design rules, within the stated classes</span>
+      <h2>Four rules, each with the class it holds in</h2>
+    </div>
+    <div class="rules">
+      <div class="rule comm"><h4>Send a step its dependencies, not the history</h4><p><b>Holds for</b> chains where each step reads <span class="m">O(1)</span> earlier blocks (Proposition 3). <b>Except</b> when the whole task fits in one call, where one-call execution is cheaper still.</p></div>
+      <div class="rule acc"><h4>Reach state by random access</h4><p><b>Holds against</b> deterministic, always-correct, non-speculative sequential interfaces on pointer chasing (Theorem 4). The speculative case is open.</p></div>
+      <div class="rule rec"><h4>Persist reusable blocks</h4><p><b>Holds for</b> bit-reversal reuse with <span class="m">C = o(n)</span> (Theorem 6); no model-call gain when the live state fits in context (regime i).</p></div>
+      <div class="rule rel"><h4>Buy feedback before extra samples when a check is cheap</h4><p><b>Holds on</b> the hard family against the stage-local no-feedback class for fixed <span class="m">γ &gt; 0</span> and fixed <span class="m">c<sub>v</sub></span> (Theorems 8 and 9). For growing verifier costs, compare actual costs; equal asymptotic order does not establish an advantage. The reliability scaling is checked in simulation only.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="checks">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="label">What was checked, and how</span>
+      <h2>Simulators that satisfy the hypotheses by construction, then one real model</h2>
+      <p class="lede">Accounting statements (calls, tokens, memory operations) hold for any oracle; reliability statements depend on the oracle's step error and on verifier quality. The two stages test different parts of the theory.</p>
+    </div>
+
+    <div class="checks">
+      <div class="callout"><b>Scope of the evidence.</b> The controlled simulators implement the memory, error and execution rules the theorems assume, so they check the accounting and the algebra; they are not evidence that production agents satisfy those assumptions. The real-model runs exercise the communication accounting only: the oracle made no error in <b>300 synthetic steps and 320 MATH links of calibration</b>, so the voting and checkpoint conditions were never run with a real model. <b>The reliability theory rests on simulation alone.</b></div>
+
+      <div class="card">
+        <h3>Controlled model-internal checks <span class="pill sim">stub oracle</span></h3>
+        <div class="tbl"><table>
+          <thead><tr><th>Check</th><th>Setup</th><th>Prediction tested</th><th>Observed</th></tr></thead>
+          <tbody>
+            <tr><td><b>E1</b> grid DAG</td><td><span class="m">64 × 64</span> grid; tiled (side <span class="m">⌊C/2⌋</span>) vs row-major; farthest-next-use eviction; <span class="m">C ∈ {4, 6, 8, 12, 16, 24, 32, 48, 64}</span></td><td><span class="m">Q<sub>blk</sub> = Θ(n²/C)</span> for the tiled schedule (Corollary 2)</td><td><span class="m">Q<sub>blk</sub>C/n² ∈ [1.94, 3.93]</span>, decreasing at every step; row-major exactly <span class="m">2(n+1)(n−C+1)</span>, i.e. <span class="m">Θ(n²)</span> until a row fits. Points with <span class="m">C</span> near <span class="m">n</span> exercise only the upper bound.</td></tr>
+            <tr><td><b>E2</b> pointer chasing</td><td><span class="m">k = 32</span>, <span class="m">n ∈ {128, 256, 512, 1024}</span>, 20 random permutations, demand-driven non-speculative stream with a <span class="m">C</span>-block cache</td><td>RAM flat, sequential linear in <span class="m">n</span> (Theorem 4; every point satisfies <span class="m">k ≤ n/4</span>)</td><td>RAM stays at <span class="m">Q<sub>blk</sub> = Q = 32</span>; sequential <span class="m">Q</span> roughly doubles when <span class="m">n</span> doubles. No stack curve: a stack-depth proxy would not implement the one-stack machine.</td></tr>
+            <tr><td><b>E3</b> chain replay</td><td>Unit-width blocks, <span class="m">n ∈ {16, …, 512}</span></td><td><span class="m">n²</span> vs <span class="m">n</span> input traffic (Proposition 3)</td><td>Evaluations, not measurements: replay counts <span class="m">n(n+1)/2</span> prompt blocks and persistent prompting <span class="m">2n</span>, by construction.</td></tr>
+            <tr><td><b>E4</b> stage-local sampling</td><td>400 trials per configuration; <span class="m">ε = 0.1</span>, <span class="m">δ = 0.05</span>, <span class="m">c<sub>v</sub> = 1</span>; three wrong blocks, so <span class="m">γ = 1 − 4ε/3</span></td><td>Prescribed plurality-voting budget and perfect-verification cost (Theorems 7 and 9); not a test of Theorem 8's hard-family lower bound (here <span class="m">γ = 13/15</span>, outside its <span class="m">γ ≤ 1/2</span> range)</td><td>Voting budgets grow from 17 to 26 over <span class="m">n = 10</span> to 160; perfect local verification costs ≈ <span class="m">2.22n</span>; the unamplified chain spends exactly <span class="m">n</span> calls and its success falls from 0.35 to 0. The budget curve is the analysis's own formula, so this is a check of the algebra.</td></tr>
+            <tr><td><b>E5</b> checkpointing</td><td>2000 trials per cell; <span class="m">n = 600</span>; <span class="m">k ∈ {1, …, 60}</span> with <span class="m">k | 600</span>; <span class="m">ε ∈ {0.02, 0.05, 0.10}</span>; <span class="m">c<sub>v</sub> ∈ {1, 4, 16}</span></td><td>Exact <span class="m">T(k)</span> and the closed-form <span class="m">k<sup>⋆</sup></span> (Theorem 11)</td><td>Within <b>0.5%</b> of <span class="m">T(k)</span> for <span class="m">k ≤ 20</span> (the range of the simulated optima) and within <b>1.3%</b> over the whole grid (worst cell <span class="m">ε = 0.1</span>, <span class="m">k = 40</span>).</td></tr>
+          </tbody>
+        </table></div>
+      </div>
+
+      <div class="two">
+        <div class="card">
+          <h3>Checkpoint law: theory versus simulation</h3>
+          <p><span class="m">n = 600</span>, 2000 trials per cell. "Leading" is <span class="m">√(c<sub>v</sub>/ε)</span>; "closed form" is <span class="m">k<sup>⋆</sup></span>; "grid" minimises the formula <span class="m">T(k)</span> over all integers <span class="m">k ≤ 60</span>, whereas "sim" is the empirical optimum over the admissible divisors <span class="m">k | 600</span>: two intentionally different optimisation domains, not identical finite-horizon optima. Write <span class="m">β = −log(1−ε)</span> and <span class="m">z = √(c<sub>v</sub>β)</span>. The last two columns are the appendix's continuous two-sided bounds <span class="m">1 + 2z ≤ T(k<sup>⋆</sup>)/n ≤ (1+z)e<sup>z</sup></span>; they concern the continuous relaxation, not the admissible-integer or empirical optimum.</p>
+          <div class="tbl"><table>
+            <thead><tr><th class="num">ε</th><th class="num">c<sub>v</sub></th><th class="num">leading</th><th class="num">closed form</th><th class="num">grid</th><th class="num">sim</th><th class="num">sim T/n</th><th class="num">1+2z</th><th class="num">(1+z)e<sup>z</sup></th></tr></thead>
+            <tbody>
+              <tr><td class="num">0.02</td><td class="num">1</td><td class="num">7.07</td><td class="num">6.55</td><td class="num">7</td><td class="num">6</td><td class="num">1.317</td><td class="num">1.284</td><td class="num">1.317</td></tr>
+              <tr><td class="num">0.02</td><td class="num">4</td><td class="num">14.14</td><td class="num">12.21</td><td class="num">12</td><td class="num">12</td><td class="num">1.699</td><td class="num">1.569</td><td class="num">1.707</td></tr>
+              <tr><td class="num">0.02</td><td class="num">16</td><td class="num">28.28</td><td class="num">21.26</td><td class="num">21</td><td class="num">20</td><td class="num">2.693</td><td class="num">2.137</td><td class="num">2.770</td></tr>
+              <tr><td class="num">0.05</td><td class="num">1</td><td class="num">4.47</td><td class="num">3.94</td><td class="num">4</td><td class="num">4</td><td class="num">1.536</td><td class="num">1.453</td><td class="num">1.538</td></tr>
+              <tr><td class="num">0.05</td><td class="num">4</td><td class="num">8.94</td><td class="num">7.05</td><td class="num">7</td><td class="num">8</td><td class="num">2.266</td><td class="num">1.906</td><td class="num">2.285</td></tr>
+              <tr><td class="num">0.05</td><td class="num">16</td><td class="num">17.89</td><td class="num">11.39</td><td class="num">11</td><td class="num">12</td><td class="num">4.325</td><td class="num">2.812</td><td class="num">4.716</td></tr>
+              <tr><td class="num">0.10</td><td class="num">1</td><td class="num">3.16</td><td class="num">2.62</td><td class="num">3</td><td class="num">3</td><td class="num">1.831</td><td class="num">1.649</td><td class="num">1.833</td></tr>
+              <tr><td class="num">0.10</td><td class="num">4</td><td class="num">6.32</td><td class="num">4.48</td><td class="num">4</td><td class="num">4</td><td class="num">3.051</td><td class="num">2.298</td><td class="num">3.157</td></tr>
+              <tr><td class="num">0.10</td><td class="num">16</td><td class="num">12.65</td><td class="num">6.69</td><td class="num">7</td><td class="num">6</td><td class="num">6.907</td><td class="num">3.597</td><td class="num">8.420</td></tr>
+            </tbody>
+          </table></div>
+          <p>The closed form lands within one of the integer grid optimum in all nine configurations; the leading-order form is off by a factor of two at <span class="m">ε = 0.1</span>, <span class="m">c<sub>v</sub> = 16</span>. The paper reports that failure rather than tuning it away.</p>
+        </div>
+
+        <div class="stack">
+          <div class="card">
+            <h3>Real model as the semantic oracle <span class="pill comm">accounting only</span></h3>
+            <p>One fixed frontier reasoning model was used, with 30 chains per cell and no temperature override; the synthetic-chain experiment used its lowest supported reasoning effort. Traffic-prediction parameters were extrapolated from the smallest tested instances, with nothing fitted to larger measurements. The final runs nevertheless include a routing correction made after inspecting test outputs, as disclosed in the paper. Every memory-using condition uses random access, so this comparison concerns what each call receives, not the memory-access separation.</p>
+            <div class="stats">
+              <div class="stat"><b>7.1×</b><span>fewer input tokens for dependency-only prompting than full-history replay on the depth-64 synthetic chain (7,552 vs 53,920 per chain)</span></div>
+              <div class="stat"><b>11×</b><span>fewer at depth 16 on chained MATH-500 (3,182 vs 35,000), the gap widening with depth as Proposition 3 predicts</span></div>
+              <div class="stat"><b>exact<small> / 14% low for MATH replay</small></b><span>synthetic prediction from <span class="m">n = 4</span> alone (<span class="m">h = 118</span>, <span class="m">b = 23</span> tokens) matches every larger <span class="m">n</span>. At depth 16 the MATH replay prediction from depths 1–2 is 29,960 vs 35,000 measured tokens, about 14% low; the dependency-only prediction is 2,908 vs 3,182, about 8.6% low</span></div>
+              <div class="stat"><b>0<small> errors</small></b><span>in calibration (300 synthetic steps, 320 MATH links): success is near ceiling everywhere, so the comparison is one of cost, and no reliability law was tested</span></div>
+            </div>
+            <p class="note">The synthetic task is an 8-digit state rotated, digit-shifted and partially reversed each step, so every transition has computable ground truth. Chained MATH-500 follows Compositional GSM: problem <span class="m">i+1</span> has one integer literal replaced by <span class="m">(X<sub>i</sub> + c)</span>; the substituted literal has its original value when <span class="m">X<sub>i</sub></span> is correct, so the gold answer is then preserved, and an incorrect <span class="m">X<sub>i</sub></span> changes the next problem. Where the sixteen problems fit in one call, the <em>Direct</em> condition is cheapest of all and answers the final link correctly in all 30 chains; that is a finite-size observation, not a test of regime (i). The controller's parsing and normalisation are uncharged classical work, so these runs test the accounting of an implemented harness, not the provenance-dependent lower bounds.</p>
+          </div>
+          <div class="card">
+            <h3>Assumption diagnostics <span class="pill open">exploratory</span></h3>
+            <p>A separate small model-based sample (a smaller commercial model, 6 chains per cell, 36 calibration steps) was used only to probe the reliability assumptions, not to establish a scaling law.</p>
+            <div class="tbl"><table>
+              <thead><tr><th>Assumption</th><th>Assessed</th><th>Current evidence</th></tr></thead>
+              <tbody>
+                <tr><td>Independent, constant step error</td><td>exploratory</td><td>questionable; implied error rises with depth (0.045 at <span class="m">n = 4</span>, 0.049 at <span class="m">n = 8</span>, against 0.028 isolated)</td></tr>
+                <tr><td>Absorbing errors</td><td>controlled</td><td>enforced by construction</td></tr>
+                <tr><td>Perfect / local verifier</td><td>exploratory</td><td>imperfect; <span class="m">p<sub>r</sub> ≈ 0.19</span>, <span class="m">p<sub>a</sub></span> unresolved (0/36 false accepts, one-sided 95% upper bound 0.080)</td></tr>
+                <tr><td>Constant <span class="m">c<sub>v</sub></span></td><td>both</td><td>fixed by protocol, not general workloads</td></tr>
+                <tr><td>Value-provenance routing</td><td>both</td><td>approximate; parsing remains classical compute</td></tr>
+              </tbody>
+            </table></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="open" class="tight">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="label">Stated as open or scoped</span>
+      <h2>What the paper does not settle</h2>
+    </div>
+    <div class="cards3">
+      <div class="art"><h3>Speculative sequential access</h3><p>Whether <span class="m">Ω(kn)</span> survives arbitrary prefetching, preprocessing and a bounded cache is open. Yao's lemma does not restore the visit-order inequality, and a one-time scan cannot be charged once per hop. The separation is claimed only for the non-speculative class.</p></div>
+      <div class="art"><h3>The one-stack constant</h3><p>With opaque blocks, correctness on every input and no hidden content-dependent state (<span class="m">h = 0</span>), the buffered one-stack bounds leave a gap between <span class="m">n/3</span> necessary context blocks and <span class="m">⌈(n+1)/2⌉</span> sufficient blocks. Only the linear order is claimed. Two stacks are a different architecture.</p></div>
+      <div class="art"><h3>Unrestricted reliability strategies</h3><p>The sampling lower bound is against the stage-local no-feedback class; the checkpoint optimum is within the rollback class. Correlated errors are covered only by a conditional-hazard envelope, and a marginal error rate alone implies neither amplification nor the checkpoint formula.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="artifacts">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="label">Reproducibility</span>
+      <h2>What accompanies the submission</h2>
+      <p class="lede">Core theorem statements appear in the main text; additional results and proofs appear in the appendices. The items below are in the supplementary material submitted with the paper.</p>
+    </div>
+    <div class="cards3">
+      <div class="art"><h3>Simulators</h3><span class="path">experiments/lam_sim.py</span><p>The machine-model simulators for E1–E5, with the stub oracle whose error model is the one the theorems assume.</p></div>
+      <div class="art"><h3>Figures and raw results</h3><span class="path">experiments/make_figures.py · experiments/results/</span><p>Figure-generating code and the raw result files consumed by every figure and table.</p></div>
+      <div class="art"><h3>Real-model harness</h3><span class="path">experiments/lam_llm.py</span><p>One script with a frozen, checksummed configuration (seed, grids, sample sizes, token caps, selection rules) and an append-only call log keyed by request content, so conditions share responses and an interrupted run resumes without new calls.</p></div>
+    </div>
+    <p class="disclaimer">Every experimental parameter needed to regenerate each figure and table is stated in the appendices. The frontier-model experiment depends on a specific model deployment and is reported with its sample sizes so that its limits are visible.</p>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span><b>Language Model Agent Machines</b> · Anonymous ICLR 2027 Submission</span>
+    <span>No page-level analytics · Assets served from this origin · Hosting-provider logging may apply · Anonymous review artifact</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var buttons=document.querySelectorAll('.filters button');
+  var groups=document.querySelectorAll('.group[data-g]');
+  buttons.forEach(function(b){
+    b.addEventListener('click',function(){
+      var f=b.getAttribute('data-f');
+      buttons.forEach(function(x){x.setAttribute('aria-pressed',String(x===b));});
+      groups.forEach(function(g){g.hidden=!(f==='all'||g.getAttribute('data-g')===f);});
+    });
+  });
+})();
+</script>
+</body>
+</html>
